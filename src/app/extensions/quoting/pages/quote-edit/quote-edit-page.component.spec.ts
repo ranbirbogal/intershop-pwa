@@ -5,6 +5,7 @@ import { Store, combineReducers } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
 import { MockComponent } from 'ng-mocks';
 
+import { coreReducers } from 'ish-core/store/core-store.module';
 import { shoppingReducers } from 'ish-core/store/shopping/shopping-store.module';
 import { ngrxTesting } from 'ish-core/utils/dev/ngrx-testing';
 import { LoadingComponent } from 'ish-shared/components/common/loading/loading.component';
@@ -29,6 +30,7 @@ describe('Quote Edit Page Component', () => {
         TranslateModule.forRoot(),
         ngrxTesting({
           reducers: {
+            ...coreReducers,
             quoting: combineReducers(quotingReducers),
             shopping: combineReducers(shoppingReducers),
           },
