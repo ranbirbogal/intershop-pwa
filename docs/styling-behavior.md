@@ -23,4 +23,35 @@ Currently the default font families for the Intershop Progressive Web App [Robot
 ## Multitheming
 
 It is possible to create multiple styling themes.  
-The Intershop Progressive Web App uses multitheming to provide different styles for B2C an B2B applications. The styles for B2C are defined in _\\src\\themes\\default\\style.scss_, for B2B in _\\src\\themes\\blue\\style.scss_. The themes are referenced in the _angular.json_ so that for both themes bundles are prepared during the compiling process. These bundles are  used in the deployment process.
+The Intershop Progressive Web App uses multitheming to provide different styles for the B2C an the B2B application. The styles for B2C are defined in _\\src\\styles\\themes\\default\\style.scss_, for B2B in _\\src\\themes\\styles\\blue\\style.scss_.
+
+Using schematics to start customizing Intershop Progressive Web App prepares everything for an own custom styling theme. (See [Customizations - Start Customization](customizations.md#start-customization))  
+The steps are:
+
+1. Creating custom theme folder (named _custom_) under _\\src\\themes\\styles\\_ with a copy of _styles.scss_ and _variables.scss_
+2. Referencing the styling theme in the _angular.json_, so that the theme bundle will be prepared during the compiling process
+
+    ````json
+    ...
+    "styles": [
+      ...
+      {
+        "input": "src/styles/themes/custom/style.scss",
+        "lazy": true,
+        "bundleName": "custom"
+      },
+      ...
+    ]
+    ...
+    ````
+
+3. Adding the theme to your application settings in the _environment.ts_
+
+````typescript
+export const environment: Environment = {
+  ...
+  theme: 'custom',
+};
+````
+
+Use these steps also to create additional styling themes.
