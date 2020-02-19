@@ -1,9 +1,10 @@
 import { ApplicationRef, ChangeDetectionStrategy, Component, NgZone, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, ReplaySubject, Subject, of } from 'rxjs';
-import { filter, first, map, switchMap, take, takeUntil } from 'rxjs/operators';
+import { filter, first, map, switchMap, takeUntil } from 'rxjs/operators';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
+import { ProductContextFacade } from 'ish-core/facades/product-context.facade';
 import { ShoppingFacade } from 'ish-core/facades/shopping.facade';
 import { FeatureToggleService } from 'ish-core/feature-toggle.module';
 import { CategoryView } from 'ish-core/models/category-view/category-view.model';
@@ -28,6 +29,7 @@ import { whenTruthy } from 'ish-core/utils/operators';
   selector: 'ish-product-page',
   templateUrl: './product-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [ProductContextFacade],
 })
 export class ProductPageComponent implements OnInit, OnDestroy {
   product$: Observable<ProductView | VariationProductView | VariationProductMasterView>;
@@ -35,7 +37,6 @@ export class ProductPageComponent implements OnInit, OnDestroy {
   productLoading$: Observable<boolean>;
   category$: Observable<CategoryView>;
 
-  quantity: number;
   price$: Observable<ProductPrices>;
 
   currentUrl$: Observable<string>;
@@ -54,14 +55,19 @@ export class ProductPageComponent implements OnInit, OnDestroy {
     private prodRoutePipe: ProductRoutePipe,
     private featureToggleService: FeatureToggleService,
     private appRef: ApplicationRef,
-    private ngZone: NgZone
-  ) {}
+    private ngZone: NgZone,
+    productContext: ProductContextFacade,
+    activatedRoute: ActivatedRoute
+  ) {
+    productContext.setCompletenessLevel(ProductCompletenessLevel.Detail);
+    productContext.connectSKU(activatedRoute.paramMap.pipe(map(params => params.get('sku'))));
+    this.product$ = productContext.product$;
+    this.productLoading$ = productContext.loading$;
+    this.productVariationOptions$ = productContext.productVariationOptions$;
+  }
 
   ngOnInit() {
-    this.product$ = this.shoppingFacade.selectedProduct$;
-    this.productVariationOptions$ = this.shoppingFacade.selectedProductVariationOptions$;
     this.category$ = this.shoppingFacade.selectedCategory$;
-    this.productLoading$ = this.shoppingFacade.productDetailLoading$;
     this.currentUrl$ = this.appFacade.currentUrl$;
 
     this.product$
@@ -70,7 +76,6 @@ export class ProductPageComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$)
       )
       .subscribe(product => {
-        this.quantity = product.minOrderQuantity;
         if (
           ProductHelper.isMasterProduct(product) &&
           ProductVariationHelper.hasDefaultVariation(product) &&
@@ -107,30 +112,26 @@ export class ProductPageComponent implements OnInit, OnDestroy {
     );
   }
 
-  addToBasket() {
-    this.product$
-      .pipe(
-        take(1),
-        whenTruthy()
-      )
-      .subscribe(product => {
-        if (ProductHelper.isRetailSet(product)) {
-          this.retailSetParts$.pipe(take(1)).subscribe(parts =>
-            parts
-              .filter(({ quantity }) => !!quantity)
-              .forEach(({ sku, quantity }) => {
-                this.shoppingFacade.addProductToBasket(sku, quantity);
-              })
-          );
-        } else {
-          this.shoppingFacade.addProductToBasket(product.sku, this.quantity);
-        }
-      });
-  }
-
-  addToCompare(sku: string) {
-    this.shoppingFacade.addProductToCompare(sku);
-  }
+  // addToBasket() {
+  //   this.product$
+  //     .pipe(
+  //       take(1),
+  //       whenTruthy()
+  //     )
+  //     .subscribe(product => {
+  //       if (ProductHelper.isRetailSet(product)) {
+  //         this.retailSetParts$.pipe(take(1)).subscribe(parts =>
+  //           parts
+  //             .filter(({ quantity }) => !!quantity)
+  //             .forEach(({ sku, quantity }) => {
+  //               this.shoppingFacade.addProductToBasket(sku, quantity);
+  //             })
+  //         );
+  //       } else {
+  //         this.shoppingFacade.addProductToBasket(product.sku, this.quantity);
+  //       }
+  //     });
+  // }
 
   variationSelected(selection: VariationSelection, product: VariationProductView) {
     const variation = ProductVariationHelper.findPossibleVariationForSelection(selection, product);
