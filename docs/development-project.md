@@ -6,14 +6,14 @@ Open Git Bash, change the current working directory to the location where you wa
 
 **Cloning using an SSH key**
 
-````bash
+```bash
 $ git clone git@github.com:intershop/intershop-pwa.git
-````
+```
 
 **Cloning using HTTPS**
 
-````bash
+```bash
 $ git clone https://github.com/intershop/intershop-pwa.git
-````
+```
 
 After your local clone has been created, you can follow the instructions in the [Quick Start Section of the _README.md_](https://github.com/intershop/intershop-pwa/blob/develop/README.md#quick-start) .

@@ -36,24 +36,24 @@ It might be helpful to use your own local environment file _environment.local.ts
 
 ![Right](icons/tip.png) **environment.local.properties**
 
- ```typescript
+```typescript
 export const environment = {
-  production: false,
+ production: false,
 
-  /* INTERSHOP COMMERCE MANAGEMENT REST API CONFIGURATION */
+ /* INTERSHOP COMMERCE MANAGEMENT REST API CONFIGURATION */
 
-  icmBaseURL: '[https://localhost:8444](https://localhost:8444)',
-  icmServer: 'INTERSHOP/rest/WFS',
-  ...
+ icmBaseURL: '[https://localhost:8444](https://localhost:8444)',
+ icmServer: 'INTERSHOP/rest/WFS',
+ ...
 
- };
+};
 ```
 
 Use this environment by starting your server this way:
 
-````bash
+```bash
 ng serve --configuration local
-````
+```
 
 ## Debugging
 

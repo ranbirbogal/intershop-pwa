@@ -54,8 +54,8 @@ If a rule seems too harsh for you, downgrade it to warning level by choosing:
 
 **tslint.json**
 
-````typescript
+```typescript
 "rule-name": { "severity": "warning" }
-````
+```
 
 Turn it off completely by using `"rule-name": false`.

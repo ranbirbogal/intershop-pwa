@@ -8,7 +8,7 @@ The styling integration is configured in the _/src/themes/main.scss_ of the proj
 
 Instead of the Bootstrap 3 Glyphicons the current styling uses free solid icons of [Font Awesome](https://fontawesome.com/).
 
-The styling itself is integrated into the project as global style via a _style.scss_ that is referenced in the _angular.json_ and is compiled automatically (see also [Chapter Multitheming](#multitheming)). Throughout the whole Intershop Progressive Web App, there are almost no component specific `styleUrls` or `styles` properties.
+The styling itself is integrated into the project as global style via a *style.scss* that is referenced in the _angular.json_ and is compiled automatically (see also [Chapter Multitheming](#multitheming)). Throughout the whole Intershop Progressive Web App, there are almost no component specific `styleUrls` or `styles` properties.
 
 The [Javascript part of Bootstrap](http://getbootstrap.com/javascript/) for the behavior is not directly used from the Bootstrap dependency since this implementation is jQuery based and not really suited to work in an Angular environment. For Bootstrap 4, [ng-bootstrap](https://ng-bootstrap.github.io) provides _Bootstrap widgets the angular way_. Using these components works best with the styling taken from the Responsive Starter Store. However, the generation and structure of the HTML for the Angular Bootstrap differs from the HTML working with the original jQuery based _bootstrap.js_. Adaptions and changes in this area are inevitable.
 
@@ -32,25 +32,25 @@ You can also manually prepare a new theme:
 
 2. Reference the styling theme in the _angular.json_, so that the theme bundle will be extracted during the compiling process
 
-    ````json
-    ...
-    "styles": [
-      ...
-      {
-        "input": "src/styles/themes/custom/style.scss",
-        "lazy": true,
-        "bundleName": "custom"
-      },
-      ...
-    ]
-    ...
-    ````
+   ```json
+   ...
+   "styles": [
+     ...
+     {
+       "input": "src/styles/themes/custom/style.scss",
+       "lazy": true,
+       "bundleName": "custom"
+     },
+     ...
+   ]
+   ...
+   ```
 
 3. Set the theme to be used in your application settings in the _environment.ts_
 
-````typescript
+```typescript
 export const environment: Environment = {
   ...
   theme: 'custom',
 };
-````
+```

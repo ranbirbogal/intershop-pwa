@@ -12,28 +12,25 @@ The standard way of configuring an Angular Application can be done by managing m
 
 Properties supplied with environment files should not be accessed directly in artifacts other than modules. Instead, you need to provide them via `InjectionToken`s to be used in components, pipes or services. The `InjectionToken` can be used to access a certain property later on:
 
-````typescript
+```typescript
 export const PROPERTY = new InjectionToken<string>('property');
 
-
 @NgModule({
-  providers: [
-    { provide: PROPERTY, useValue: environment.property }
-  ],
+  providers: [{ provide: PROPERTY, useValue: environment.property }],
 })
 export class SomeModule {}
-````
+```
 
 **Property consumer**
 
-````typescript
+```typescript
 import { Inject } from '@angular/core'
 import { PROPERTY } from '../injection-keys'
 
 ...
 
 constructor(@Inject(PROPERTY) private property: string)
-````
+```
 
 It is good practice to never write those properties at runtime.
 
@@ -41,7 +38,7 @@ As can be seen here, only build-time and deploy-time configuration parameters ca
 
 ### Node.js Environment Variables
 
-When running the application in Angular Universal mode within a _Node.js_ environment, we can additionally access the process environment variables via _process.env._ This method provides a way to configure the application at deploy time, e.g., when using docker images. Configuration can then be consumed and passed to the client side via means of state transfer.
+When running the application in Angular Universal mode within a _Node.js_ environment, we can additionally access the process environment variables via *process.env.* This method provides a way to configure the application at deploy time, e.g., when using docker images. Configuration can then be consumed and passed to the client side via means of state transfer.
 
 ### NgRx Configuration State
 
@@ -91,9 +88,9 @@ To set ICM channels and applications dynamically, you have to use URL rewriting 
 
 **nginx URL rewrite snippet**
 
-````typescript
+```text
 rewrite ^(.*)$ "$1;channel=inSPIRED-inTRONICS_Business-Site;application=-" break;
-````
+```
 
 The above example configuration snippet shows a [Nginx](https://en.wikipedia.org/wiki/Nginx) rewrite rule on how to map an incoming top level request URL to an internal worker process, e.g., _Node.js_. It shows both the PWA parameters `channel`, `application` and their fixed example values. The parameters of each incoming request are then read and transferred to the NgRx store to be used for the composition of the initial HTML response on the server side. Afterwards they are propagated to the client side and re-used for subsequent REST requests.
 
@@ -113,7 +110,7 @@ Various means to activate and deactivate functionality based on feature toggles 
 
 **Guard**
 
-````typescript
+```typescript
 const routes: Routes = [
   {
     path: 'quote',
@@ -122,19 +119,19 @@ const routes: Routes = [
     data: { feature: 'quoting' },
   },
 ...
-````
+```
 
 Add the Guard as `CanActivate` to the routing definition. Additionally, you have to supply a `data` field called `feature`, containing a string that determines for which feature the route should be active. If the feature is deactivated, the user is sent to the error page on accessing.
 
 **Directive**
 
-````html
-<ish-product-add-to-compare *ishFeature="'compare'"> ...
-````
+```html
+<ish-product-add-to-compare *ishFeature="'compare'"> ...</ish-product-add-to-compare>
+```
 
 **Service**
 
-````typescript
+```typescript
 @Injectable({ providedIn: 'root' })
 export class SomeService {
   constructor(private featureToggleService: FeatureToggleService) {}
@@ -142,7 +139,7 @@ export class SomeService {
     if (this.featureToggleService.enabled('quoting')) {
 ...
 }
-````
+```
 
 ## Setting Default Locale
 
@@ -150,9 +147,9 @@ You can set the default locale statically by modifying the order of the provided
 
 ## Extend Locales
 
-To add other languages except English, German or French, you have to create a new json-mapping-file with all translations, e.g., _./src/assets/i18n/nl\_NL.json_). Add the locale in the file _./src/environment/environments.ts_. Additionally, for Angular's built-in components, e.g., currency-pipe, you have to register locale data similar to `localeDe` and `localeFr` with `registerLocaleData(localeNl)` in _./src/app/core/configuration.module.ts._
+To add other languages except English, German or French, you have to create a new json-mapping-file with all translations, e.g., _./src/assets/i18n/nl_NL.json_). Add the locale in the file _./src/environment/environments.ts_. Additionally, for Angular's built-in components, e.g., currency-pipe, you have to register locale data similar to `localeDe` and `localeFr` with `registerLocaleData(localeNl)` in _./src/app/core/configuration.module.ts._
 
-````typescript
+```typescript
 ...
 import localeNl from '@angular/common/locales/nl';
 ...
@@ -162,7 +159,8 @@ export class ConfigurationModule {
     ...
   }
 }
-````
+```
 
 > #### Configuration REST Resource
+>
 > We are currently planning to implement a Configuration REST resource in the ICM so that all necessary runtime configuration can be defined in the ICM Backoffice and consumed by each PWA deployment.
