@@ -67,8 +67,8 @@ Use predefined form control components and directives to get general functionali
 
 - Build a container component (page) which is responsible for getting and sending data using a service.
 - Build a form component which holds the form.
-- Use either predefined form control components (see below) to build your form or `ish-form-control-feedback` component to display error messages and the validation icons and `ishShowFormFeedback`  directive on the form-group elements in order to color labels and controls according to their validation status.
-- In both cases the parameter `errorMessages` should be a key value pair of a possible validator that causes the error and its localisation key/localized string, e.g.:  
+- Use either predefined form control components (see below) to build your form or `ish-form-control-feedback` component to display error messages and the validation icons and `ishShowFormFeedback` directive on the form-group elements in order to color labels and controls according to their validation status.
+- In both cases the parameter `errorMessages` should be a key value pair of a possible validator that causes the error and its localisation key/localized string, e.g.:  
    { `'required':'account.login.email.error.required'` , `'email':'account.login.email.error.invalid'` }
 - Take care of disabling the form submit button in case the user submits an invalid form (see example below).
 
@@ -210,7 +210,7 @@ Form component:
 1. Place the address-form component on the html part of your form component.
 2. onInit: Add a (sub) formGroup for your address to your form using the `getFactory` method of the AddressFormService.
 3. Implement the onCountryChange behavior to switch the address formGroup according to the country specific form controls and emit this to the container.
-4. React on region changes: Update validator for "state" control according to regions.
+4. React on region changes: Update validator for "state" control according to regions.
 
 ### How to Create a New Country Specific Form
 

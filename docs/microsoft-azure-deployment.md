@@ -7,7 +7,7 @@ Make sure you have a deployment user at hand. If this is not the case, create on
 > ![Note](icons/note.png) **Note**
 >
 > - Both USERNAME and PASSWORD settings have nothing to do with your Azure login. Do not mix them.
-> - Replace RESOURCE_GROUP_NAME and PLAN_NAME with meaningful values.
+> - Replace RESOURCE_GROUP_NAME and PLAN_NAME with meaningful values.
 
 - You need to have a resource group with an Azure App Service plan. If this is not the case, create them with Azure CLI or with the Azure Portal:
   - To create the resource group: `az group create --name $RESOURCE_GROUP_NAME --location "West Europe"`
@@ -33,7 +33,7 @@ Depending on your taste, you can create a Web App with either Azure CLI or the A
 
 ![WebApp Create](microsoft-azure-webapp-create.png)
 
-Specify a name, select Linux as OS, Runtime Stack, Publish (see next step) and select the correct App Service Plan (see the prerequisites chapter above). The same applies for the CLI.
+Specify a name, select Linux as OS, Runtime Stack, Publish (see next step) and select the correct App Service Plan (see the prerequisites chapter above). The same applies for the CLI.
 
 **CLI to create a Web App**
 
@@ -54,7 +54,7 @@ To specify a _Code_ deployment:
 
 1. Go to the created Web App and select _Deployment Center_.  
    Azure Portal will automatically ask you what source you want to configure.
-2. Select *Local Git Repository* as deployment option.  
+2. Select _Local Git Repository_ as deployment option.  
    This will create an empty git repository connected with your Web App.
 
 Another possibility is to choose _Docker Image_ as publish setting. In this guide we will not elaborate further on this option. All that is important is that the PWA comes with a Dockerfile that can be utilized for Docker-based deployments. The Azure Devops chapter picks this topic up again to ease builds and deployments.
@@ -65,7 +65,7 @@ To produce a production ready distribution:
 
 1. Go to the checked out source tree of the Intershop Progressive Web App.
 2. Execute`npm run build`.  
-   This step takes some time and will produce a new version of the *./dist* folder.
+   This step takes some time and will produce a new version of the _./dist_ folder.
 
 ### Use Git Push to Trigger a Deployment
 
@@ -73,8 +73,8 @@ Use Git Push to trigger a deployment:
 
 1. Go to a different folder and let Git clone your remote repository.
    > ![Info](icons/info.png) **Info**  
-   > You can copy the git URL from the *Overview* tab of your created Web App.  
-   > Search for  _Git clone url_. Make sure your created deployment user is part of that URL, e.g.,  _https://deploymentuser@webappname.scm.azurewebsites.net:443/webappname.git._
+   > You can copy the git URL from the _Overview_ tab of your created Web App.  
+   > Search for _Git clone url_. Make sure your created deployment user is part of that URL, e.g., _https://deploymentuser@webappname.scm.azurewebsites.net:443/webappname.git._
 
 This will produce another empty repository on your local machine. Go to the folder containing the repository and the work tree (which is empty).
 
@@ -116,8 +116,8 @@ To https://webappname.scm.azurewebsites.net:443/webappname.git
 To configure Intershop Commerce Management Backend:
 
 1. Go to the deployed Web App in the Azure Portal and select _Application settings._
-2. Click on _Add new setting_ and provide the Intershop base URL (i.e., the place where ICM is hosted) under the name _ICM_BASE_URL. _
-3. Apply with the *Save* button.  
+2. Click on _Add new setting_ and provide the Intershop base URL (i.e., the place where ICM is hosted) under the name _ICM_BASE_URL. _
+3. Apply with the _Save_ button.  
    The Node.js web application will use the value to construct REST URLs.
 
 ![Application Settings](microsoft-azure-application-settings.png)
@@ -136,13 +136,13 @@ With Azure Devops, it is possible to create a Git-based project that can be task
 
 ![VSTS Flow](microsoft-azure-VSTS-flow.jpg)
 
-Angular apps can be easily managed with the aid of Azure Devops. It all begins with a `git clone` of a given project URL. After successful cloning of the remote repository you can work on the project. Start a new feature branch and once the feature is ready, create a pull request to merge changes into protected branches. All state changes can be configured to trigger a new build. A build artifact is defined by the 'Build Definition' that can be managed after logging into the Azure Devops account successfully (see info box above).
+Angular apps can be easily managed with the aid of Azure Devops. It all begins with a `git clone` of a given project URL. After successful cloning of the remote repository you can work on the project. Start a new feature branch and once the feature is ready, create a pull request to merge changes into protected branches. All state changes can be configured to trigger a new build. A build artifact is defined by the 'Build Definition' that can be managed after logging into the Azure Devops account successfully (see info box above).
 
 ### Build Definition
 
-Click on the project | *Build and Release | Build* to open the available build definitions.
+Click on the project | _Build and Release | Build_ to open the available build definitions.
 
-A definition is basically a set of tasks that needs to be configured. Tons of different tasks are available. Command scripts can be executed as part of a build step as well. A build definition also defines where that build is executed later (the so-called agent queue). By registering your own build agents (installed on some machines in your IT infrastructure), you can build artifacts in your own environment and let only releases leave your premises.
+A definition is basically a set of tasks that needs to be configured. Tons of different tasks are available. Command scripts can be executed as part of a build step as well. A build definition also defines where that build is executed later (the so-called agent queue). By registering your own build agents (installed on some machines in your IT infrastructure), you can build artifacts in your own environment and let only releases leave your premises.
 
 The easiest way to build the Intershop Progressive Web App is to use Docker build tasks, since our sources already contain Docker files that produce and test the necessary artifacts. The image below shows the complete implementation of the build process. It all starts with getting the sources with settings like name of the project and Git branch. In Phase 1 (executed on agents) an image is built, which is later being pushed to a docker container registry.
 
@@ -157,7 +157,7 @@ Every Docker build task wants to know about:
 - Build Arguments
 - Tags
 
-Building a production build out of the PWA uses just  `npm run build` in a Multi-Step Docker build (see `Dockerfile`).
+Building a production build out of the PWA uses just `npm run build` in a Multi-Step Docker build (see `Dockerfile`).
 
 As an alternative approach, you can also rebuild all the tasks that are implemented in the Docker file used for the Docker-based build. However, this is not the recommended approach.
 
@@ -171,7 +171,7 @@ Whatever fits best, the artifacts that are coming out of a build definition are 
 
 The implementation of a release process (in a way continuous delivery) is done via release definition:
 
-1. Click on the project | *Build and Release |* *Releases* to open the available definitions.  
+1. Click on the project | _Build and Release |_ _Releases_ to open the available definitions.  
    A release consumes artifacts from different sources, be it GitHub, VSTS Build Definition, VSTS Git repo, Azure Container Registry or even Jenkins. It is the starting point of such a release pipeline.  
    ![Drop](microsoft-azure-drop.png)
 2. Decide what to do with the artifact (called _Drop_ in the picture above).  
@@ -185,4 +185,4 @@ The implementation of a release process (in a way continuous delivery) is done v
    - App Service name
    - Image Source (Container Registry or Built-in Image)
 
-   Image Source setting determines whether a Docker image will be pulled from the given container registry or such an image will be created by Azure itself. If _Built-in Image_ is selected, you have to define what kind of runtime stack you need (i.e., Node.js, Ruby, PHP, .NET). Either way docker is the easiest way, but you can also let Azure create the image for you. All you need is a web app that is compatible with the available runtime stacks. For the Intershop Progressive Web App based Storefront, the Node.js environment would be suitable.
+   Image Source setting determines whether a Docker image will be pulled from the given container registry or such an image will be created by Azure itself. If _Built-in Image_ is selected, you have to define what kind of runtime stack you need (i.e., Node.js, Ruby, PHP, .NET). Either way docker is the easiest way, but you can also let Azure create the image for you. All you need is a web app that is compatible with the available runtime stacks. For the Intershop Progressive Web App based Storefront, the Node.js environment would be suitable.

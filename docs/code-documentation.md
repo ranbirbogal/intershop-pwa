@@ -1,10 +1,10 @@
 # Code Documentation
 
-For our Intershop Progressive Web App, Compodoc is used as documentation package. For further information refer to [Compodoc](https://compodoc.app).
+For our Intershop Progressive Web App, Compodoc is used as documentation package. For further information refer to [Compodoc](https://compodoc.app).
 
-For documentation, the *tsconfig.app.json* file is used as configuration file. The output folder for the documentation is set to _<project-home>/docs/compodoc_.
+For documentation, the _tsconfig.app.json_ file is used as configuration file. The output folder for the documentation is set to _<project-home>/docs/compodoc_.
 
-We use an own styling theme based on the theme '_readthedocs_' provided by Compodoc. The _style.css_ file of the theme can be found in *<project-home>/docs/theme*.
+We use an own styling theme based on the theme '_readthedocs_' provided by Compodoc. The _style.css_ file of the theme can be found in _<project-home>/docs/theme_.
 
 Examples for the comment styling pattern can be found here: [TypeDoc - DocComments](http://typedoc.org/guides/doccomments/).
 
@@ -28,7 +28,7 @@ The generated documentation can be called by _<project-home>/docs/compodoc/index
 npm run docs:serve
 ```
 
-Documentation is generated at *<project-home>/docs/compodoc* (output folder). The local HTTP server is launched at _http://localhost:8080_.
+Documentation is generated at _<project-home>/docs/compodoc_ (output folder). The local HTTP server is launched at _http://localhost:8080_.
 
 **Watch Source Files After Serve and Force Documentation Rebuild**
 
@@ -337,7 +337,7 @@ export function _setToken(token: string): void {
 
 ### Configuration/Injection Key Documentation
 
-To document configuration or injection keys of the Intershop Progressive Web App, the stored information of the keys has to be described.
+To document configuration or injection keys of the Intershop Progressive Web App, the stored information of the keys has to be described.
 
 If there are several states possible, describe the states of the key.
 

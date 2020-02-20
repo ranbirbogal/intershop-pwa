@@ -170,7 +170,7 @@ Usage in HTML:
 
 If you want to get the translation for a key within a component file, you have to:
 
-- Inject `TranslationService` in the component
+- Inject `TranslationService` in the component
 - Use the `get` method of the translation service, e.g., `translate.get('ID')`
 - Use `subscribe` to assign the translation to the data array
 
@@ -192,7 +192,7 @@ export class ProductTileComponent implements OnDestroy {
       });
   }
   ...
-  ngOnDestroy() {
+  ngOnDestroy() {
     this.destroy$.next();
   }
 }
@@ -231,8 +231,8 @@ Usage in View (.html):
 <span
   [ishServerHtml]="'registration.tac_privacy_policy.label' | translate"
   [callbacks]="{
-    callbackTAC: showModalDialog(modalDialogTAC)
-  }"
+    callbackTAC: showModalDialog(modalDialogTAC)
+  }"
 ></span>
 
 <ish-modal-dialog #modalDialogTAC>
@@ -247,9 +247,9 @@ Usage in ViewModel (.ts)
 ```typescript
 /* attention: generate callback-function with closure */
 showModalDialog(dialog) {
-  return () => {
-    dialog.show();
-  };
+  return () => {
+    dialog.show();
+  };
 }
 ```
 
@@ -259,7 +259,7 @@ The idea is to use the existing localization properties files of the current Res
 
 Plugin source as zip file: [ngx-translate-plugin-master.zip](ngx-translate-plugin-master.zip)
 
-In the current state of the Intershop Progressive Web App the converted localization properties from _a_responsive_ (without *app_sf_responsive_b2b* and *app_sf_responsive_costcenter*) were added and should be used within the HTML templates.
+In the current state of the Intershop Progressive Web App the converted localization properties from _a_responsive_ (without _app_sf_responsive_b2b_ and _app_sf_responsive_costcenter_) were added and should be used within the HTML templates.
 
 ## Extend Locales
 

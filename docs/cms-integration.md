@@ -39,4 +39,4 @@ UPDATE src/app/cms/cms.module.ts (4956 bytes)
 ```
 
 > **Visual Studio Code integration**  
-> For Visual Studio Code there is an extension that offers comfortable usage options for the schematics, see [Angular Schematics](https://marketplace.visualstudio.com/items?itemName=cyrilletuzi.angular-schematics).
+> For Visual Studio Code there is an extension that offers comfortable usage options for the schematics, see [Angular Schematics](https://marketplace.visualstudio.com/items?itemName=cyrilletuzi.angular-schematics).

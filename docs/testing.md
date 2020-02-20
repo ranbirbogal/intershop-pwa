@@ -16,11 +16,11 @@ Following unit tests we also run module tests which serve as the first layer of 
 
 ### Integration
 
-The next layer of tests are integration tests which run the application as a whole but mock out ICM rest responses. The test is run using a browser and performing various actions and checks on the application. For this kind of test [Cypress](https://www.cypress.io/) is required. The tests are written in a Jasmine-like behavior driven style. For the ease of readability we implemented them using a _PageObject_ pattern, see [https://martinfowler.com/bliki/PageObject.html](https://martinfowler.com/bliki/PageObject.html). Testing in this stage is of course more time-consuming as the application has to be compiled and started up as a whole. The fact of mocking server responses also limits the available workflows of the application. For example designing Mock-Data for a complete customer journey through the checkout would be too complex and too brittle. Nevertheless, the tests serve well for a basic overview of some functionality.
+The next layer of tests are integration tests which run the application as a whole but mock out ICM rest responses. The test is run using a browser and performing various actions and checks on the application. For this kind of test [Cypress](https://www.cypress.io/) is required. The tests are written in a Jasmine-like behavior driven style. For the ease of readability we implemented them using a _PageObject_ pattern, see [https://martinfowler.com/bliki/PageObject.html](https://martinfowler.com/bliki/PageObject.html). Testing in this stage is of course more time-consuming as the application has to be compiled and started up as a whole. The fact of mocking server responses also limits the available workflows of the application. For example designing Mock-Data for a complete customer journey through the checkout would be too complex and too brittle. Nevertheless, the tests serve well for a basic overview of some functionality.
 
 ### End-to-End
 
-The most time-consuming tests are complete end-to-end tests. They do not mock out anything and run the PWA against an ICM with a deployed `a_responsive:inspired-b2x`. We also use [Cypress](https://www.cypress.io/) here. Additionally, all tests from the previous Integration step should be composed in a way that they can also be run with real REST Responses. As a basic rule of thumb we only test happy path functionality or workflows that would be too cumbersome to be mocked in module tests.
+The most time-consuming tests are complete end-to-end tests. They do not mock out anything and run the PWA against an ICM with a deployed `a_responsive:inspired-b2x`. We also use [Cypress](https://www.cypress.io/) here. Additionally, all tests from the previous Integration step should be composed in a way that they can also be run with real REST Responses. As a basic rule of thumb we only test happy path functionality or workflows that would be too cumbersome to be mocked in module tests.
 
 ## Test File Locations
 
@@ -30,9 +30,9 @@ Integration and end-to-end tests currently reside in _cypress/integration/specs_
 
 ## Deviation from Standard Angular Test Frameworks
 
-By default Angular Projects are setup with [Jasmine](https://jasmine.github.io/) and Karma Runner for unit and module tests, as well as [Protractor](https://www.protractortest.org) for end-to-end Testing. We decided to deviate from these frameworks, because there are better alternatives available.
+By default Angular Projects are setup with [Jasmine](https://jasmine.github.io/) and Karma Runner for unit and module tests, as well as [Protractor](https://www.protractortest.org) for end-to-end Testing. We decided to deviate from these frameworks, because there are better alternatives available.
 
-[Jest](https://facebook.github.io/jest/) provides a better and faster experience when testing. Jest uses a JavaScript engine comparable to a virtual browser. There is no need to start up a real browser like it is standard with Jasmine+Karma. Also Jest provides an interactive command line interface with many options. Integrations for VSCode are available that will ease developing and running tests. Another big advantage of Jest is the functionality for [Snapshot Testing](https://jestjs.io/docs/en/snapshot-testing).
+[Jest](https://facebook.github.io/jest/) provides a better and faster experience when testing. Jest uses a JavaScript engine comparable to a virtual browser. There is no need to start up a real browser like it is standard with Jasmine+Karma. Also Jest provides an interactive command line interface with many options. Integrations for VSCode are available that will ease developing and running tests. Another big advantage of Jest is the functionality for [Snapshot Testing](https://jestjs.io/docs/en/snapshot-testing).
 
 We also do not use Protractor for end-to-end testing. Like all Selenium-based testing frameworks, Protractor deals with the same problems. Special Bindings for the programming language communicate via HTTP with a browser driver which then remotely controls the browser over HTTP. This indirect way is very fragile against network latency. Also the functionalities are limited. Protractor, however, is especially designed for Angular, so it automatically waits for background tasks to finish before continuing the test run. This functionality must be implemented when using Cypress.
 
@@ -60,13 +60,13 @@ The end-to-end tests have to be adapted as well. Styling and structural changes 
 
 #### Single Responsibility
 
-A test should test only one thing. One given behavior is tested in one and _only_ one test.
+A test should test only one thing. One given behavior is tested in one and _only_ one test.
 
-The tests should be independent from the others, that means no chaining and no run in a specific order is necessary.
+The tests should be independent from the others, that means no chaining and no run in a specific order is necessary.
 
 #### Test Functionality - Not Implementation
 
-A test is implemented incorrectly or the test scenario is meaningless if changes in the HTML structure of the component destroy the test result.
+A test is implemented incorrectly or the test scenario is meaningless if changes in the HTML structure of the component destroy the test result.
 
 Example: The test fails if an additional input field is added to the form.
 
@@ -90,9 +90,9 @@ Instead use the `xdescribe` or `xit` feature (just add an '`x`' before the metho
 
 ```typescript
 xdescribe("description", function() {
-  it("description", function() {
-    ...
-  });
+  it("description", function() {
+    ...
+  });
 });
 ```
 
@@ -151,10 +151,10 @@ Again, do not rely too much on the implementation. If user customizations can ea
 
 ```typescript
 it('should test if tags with their text are getting rendered on the HTML', () => {
-    expect(element.getElementsByTagName('h3')\[0\].textContent).toContain('We are sorry');
-    expect(element.getElementsByTagName('p')\[0\].textContent).toContain('The page you are looking for is currently not available');
-    expect(element.getElementsByTagName('h4')\[0\].textContent).toContain('Please try one of the following:');
-    expect(element.getElementsByClassName('btn-primary')\[0\].textContent).toContain('Search');
+    expect(element.getElementsByTagName('h3')\[0\].textContent).toContain('We are sorry');
+    expect(element.getElementsByTagName('p')\[0\].textContent).toContain('The page you are looking for is currently not available');
+    expect(element.getElementsByTagName('h4')\[0\].textContent).toContain('Please try one of the following:');
+    expect(element.getElementsByClassName('btn-primary')\[0\].textContent).toContain('Search');
 });
 ```
 
@@ -162,14 +162,14 @@ it('should test if tags with their text are getting rendered on the HTML', () =>
 
 ```typescript
 it('should test if tags with their text are getting rendered on the HTML', () => {
-    expect(element.getElementsByClassName('error-text')).toBeTruthy();
-    expect(element.getElementsByClassName('btn-primary')\[0\].textContent).toContain('Search');
+    expect(element.getElementsByClassName('error-text')).toBeTruthy();
+    expect(element.getElementsByClassName('btn-primary')\[0\].textContent).toContain('Search');
 });
 ```
 
 #### Do not Meddle with the Framework
 
-Methods like `ngOnInit()` are lifecycle-hook methods which are called by Angular – The test should not call it directly. When doing component testing, you most likely use `TestBed` anyway, so use the `detectChanges()` method of your available `ComponentFixture`.
+Methods like `ngOnInit()` are lifecycle-hook methods which are called by Angular – The test should not call it directly. When doing component testing, you most likely use `TestBed` anyway, so use the `detectChanges()` method of your available `ComponentFixture`.
 
 ![Warning](icons/warning.png) **Wrong Test with ngOnInit() Method Calling**
 
@@ -244,17 +244,17 @@ This increases readability of test cases.
 
 ```typescript
 it('should create the app', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const component = fixture.componentInstance;
-    ...
+    const fixture = TestBed.createComponent(AppComponent);
+    const component = fixture.componentInstance;
+    ...
 });
-it(\`should have the title 'app'\`, async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const component = fixture.componentInstance;
-   ...
+it('should have the title "app"', async(() => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const component = fixture.componentInstance;
+   ...
 });
 it('should match the text passed in Header Component', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
+    const fixture = TestBed.createComponent(AppComponent);
 });
 ```
 
@@ -262,19 +262,19 @@ it('should match the text passed in Header Component', async(() => {
 
 ```typescript
 describe('AppComponent', () => {
-    let translate: TranslateService;
-    let fixture: ComponentFixture<AppComponent>;
-    let component: AppComponent;
+    let translate: TranslateService;
+    let fixture: ComponentFixture<AppComponent>;
+    let component: AppComponent;
 
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: \[ ... \] });
-        fixture = TestBed.createComponent(AppComponent);
-        component = fixture.componentInstance;
-    })
-    it('should create the app', () => { ... });
-    it(\`should have as title 'app'\`, () => { ... });
-    it('should match the text passed in Header Component', () => { ... });
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: \[ ... \] });
+        fixture = TestBed.createComponent(AppComponent);
+        component = fixture.componentInstance;
+    })
+    it('should create the app', () => { ... });
+    it(\`should have as title 'app'\`, () => { ... });
+    it('should match the text passed in Header Component', () => { ... });
 });
 ```
 
@@ -317,13 +317,13 @@ The `describe` methods in Jasmine are nestable. You can use this to group variou
 
 ```typescript
 describe('AccountLogin Component', () => {
-    it('should be created', () => { ... });
-    it('should check if controls are rendered on Login page', () => { ... });
-    ....
-    describe('Username Field', () => {
-        it('should be valid when a correct email is assigned', () => { ... });
-       ....
-    });
+    it('should be created', () => { ... });
+    it('should check if controls are rendered on Login page', () => { ... });
+    ....
+    describe('Username Field', () => {
+        it('should be valid when a correct email is assigned', () => { ... });
+       ....
+    });
 });
 ```
 
@@ -442,7 +442,7 @@ describe(... () => {
 });
 ```
 
-As shown in the above example, `varA` shows the wrong way of initializing variables in tests.
+As shown in the above example, `varA` shows the wrong way of initializing variables in tests.
 
 If you do not need to change the value, use a `const` declaration like variable `varB`. If you need to change the value in some tests, assure it is reinitialized each time in the `beforeEach` method like `varC`.
 
