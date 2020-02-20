@@ -4,7 +4,7 @@ The visual design (styling) and the interaction design (behavior) of the Intersh
 
 ## Bootstrap Integration
 
-The styling integration is configured in the _\\src\\themes\\main.scss_ of the project where Bootstrap together with the customizations is configured.
+The styling integration is configured in the _/src/themes/main.scss_ of the project where Bootstrap together with the customizations is configured.
 
 Instead of the Bootstrap 3 Glyphicons the current styling uses free solid icons of [Font Awesome](https://fontawesome.com/).
 
@@ -22,14 +22,15 @@ Currently the default font families for the Intershop Progressive Web App [Robot
 
 ## Multitheming
 
-It is possible to create multiple styling themes.  
-The Intershop Progressive Web App uses multitheming to provide different styles for the B2C an the B2B application. The styles for B2C are defined in _\\src\\styles\\themes\\default\\style.scss_, for B2B in _\\src\\themes\\styles\\blue\\style.scss_.
+It is possible to create multiple themes for styling. The Intershop Progressive Web App currently uses multi-theming to provide different styles for the B2C an the B2B application. The styles for B2C are defined in _/src/styles/themes/default/style.scss_, for B2B in _/src/themes/styles/blue/style.scss_.
 
-Using schematics to start customizing Intershop Progressive Web App prepares everything for an own custom styling theme. (See [Customizations - Start Customization](customizations.md#start-customization))  
-The steps are:
+Using schematics to start customizing Intershop Progressive Web App prepares a theme for your own custom styling. (See [Customizations - Start Customization](customizations.md#start-customization))
 
-1. Creating custom theme folder (named _custom_) under _\\src\\themes\\styles\\_ with a copy of _styles.scss_ and _variables.scss_
-2. Referencing the styling theme in the _angular.json_, so that the theme bundle will be prepared during the compiling process
+You can also manually prepare a new theme:
+
+1. Create a custom theme folder (named _custom_) under _/src/themes/styles/_ with a copy of _styles.scss_ and _variables.scss_ from an available theme.
+
+2. Reference the styling theme in the _angular.json_, so that the theme bundle will be extracted during the compiling process
 
     ````json
     ...
@@ -45,7 +46,7 @@ The steps are:
     ...
     ````
 
-3. Adding the theme to your application settings in the _environment.ts_
+3. Set the theme to be used in your application settings in the _environment.ts_
 
 ````typescript
 export const environment: Environment = {
@@ -53,5 +54,3 @@ export const environment: Environment = {
   theme: 'custom',
 };
 ````
-
-Use these steps also to create additional styling themes.
