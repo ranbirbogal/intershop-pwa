@@ -17,7 +17,7 @@ const routes: Routes = [
     canActivate: [FeatureToggleGuard, AuthGuard],
     data: {
       feature: 'quoting',
-      breadcrumbData: [{ key: 'quote.quotes.link', link: '/account/quotes' }],
+      breadcrumbData: [{ key: 'quote.quotes.link', link: '/account/quotes' }, { key: 'quote.quote_details.link' }],
     },
   },
   {
@@ -27,7 +27,10 @@ const routes: Routes = [
     canActivate: [FeatureToggleGuard, AuthGuard],
     data: {
       feature: 'quoting',
-      breadcrumbData: [{ key: 'quote.quotes.link', link: '/account/quotes' }],
+      breadcrumbData: [
+        { key: 'quote.quotes.link', link: '/account/quotes' },
+        { key: 'quote.edit.unsubmitted.quote_request_details.text' },
+      ],
     },
   },
 ];

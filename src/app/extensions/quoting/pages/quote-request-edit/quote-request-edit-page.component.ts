@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivationEnd, NavigationEnd, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subject } from 'rxjs';
 import { debounce, filter, take, takeUntil, withLatestFrom } from 'rxjs/operators';
 
@@ -32,7 +33,8 @@ export class QuoteRequestEditPageComponent implements OnInit, OnDestroy {
     private quotingFacade: QuotingFacade,
     private accountFacade: AccountFacade,
     private router: Router,
-    private appFacade: AppFacade
+    private appFacade: AppFacade,
+    private translateService: TranslateService
   ) {}
 
   ngOnInit() {
@@ -96,11 +98,15 @@ export class QuoteRequestEditPageComponent implements OnInit, OnDestroy {
       .pipe(
         whenTruthy(),
         withLatestFrom(this.appFacade.breadcrumbData$),
-        take(1),
         takeUntil(this.destroy$)
       )
       .subscribe(([quote, breadcrumbData]) => {
-        this.appFacade.setBreadcrumbData([...breadcrumbData, { text: quote.displayName }]);
+        this.translateService
+          .get('quote.edit.unsubmitted.quote_request_details.text')
+          .pipe(take(1))
+          .subscribe(x => {
+            this.appFacade.setBreadcrumbData([...breadcrumbData.slice(0, -1), { text: `${x} - ${quote.displayName}` }]);
+          });
       });
   }
 }
