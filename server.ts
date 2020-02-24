@@ -25,7 +25,13 @@ import * as fs from 'fs';
 import * as proxy from 'express-http-proxy';
 
 // * NOTE :: leave this as require() since this file is built Dynamically from webpack
-const { AppServerModuleNgFactory, LAZY_MODULE_MAP, ngExpressEngine, provideModuleMap } = require('./dist/server/main');
+const {
+  AppServerModuleNgFactory,
+  LAZY_MODULE_MAP,
+  ngExpressEngine,
+  provideModuleMap,
+  APP_BASE_HREF,
+} = require('./dist/server/main');
 
 // tslint:disable-next-line: ban-specific-imports
 import { Environment } from 'src/environments/environment.model';
@@ -59,12 +65,15 @@ if (process.env.TRUST_ICM) {
 }
 
 // Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
-app.engine(
-  'html',
+app.engine('html', (path, options: { req: express.Request }, callback) =>
   ngExpressEngine({
     bootstrap: AppServerModuleNgFactory,
-    providers: [provideModuleMap(LAZY_MODULE_MAP), { provide: 'SSR_HYBRID', useValue: !!process.env.SSR_HYBRID }],
-  })
+    providers: [
+      provideModuleMap(LAZY_MODULE_MAP),
+      { provide: 'SSR_HYBRID', useValue: !!process.env.SSR_HYBRID },
+      { provide: APP_BASE_HREF, useValue: '/' + options.req.originalUrl.split('/')[1] },
+    ],
+  })(path, options, callback)
 );
 
 app.set('view engine', 'html');
@@ -105,7 +114,7 @@ if (fs.existsSync(pathToRobotsTxt)) {
 
 // Serve static files from /browser
 app.get(
-  '*.*',
+  /\/(se-sv\/|en-us\/)?.*\..*/,
   express.static(join(DIST_FOLDER, 'browser'), {
     setHeaders: (res, path) => {
       if (/\.[0-9a-f]{20,}\./.test(path)) {
@@ -150,6 +159,9 @@ const angularUniversal = (req: express.Request, res: express.Response) => {
         if (process.env.PROXY_ICM && req.get('host')) {
           newHtml = html.replace(new RegExp(ICM_BASE_URL, 'g'), `${req.protocol}://${req.get('host')}`);
         }
+
+        newHtml = html.replace('<head>', `<head><base href="/${req.originalUrl.split('/')[1]}" />`);
+
         res.status(res.statusCode).send(newHtml || html);
       } else {
         res.status(500).send(err.message);

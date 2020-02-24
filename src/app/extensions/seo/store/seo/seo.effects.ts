@@ -37,8 +37,7 @@ export class SeoEffects {
   ) {
     // get baseURL
     if (isPlatformServer(this.platformId)) {
-      this.baseURL = `${this.request.protocol}://${this.request.get('host') +
-        this.doc.querySelector('base').getAttribute('href')}`;
+      this.baseURL = `${this.request.protocol}://${this.request.get('host')}`;
     } else {
       this.baseURL = this.doc.baseURI;
     }
