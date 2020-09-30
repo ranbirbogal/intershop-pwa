@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 
 import { AppFacade } from 'ish-core/facades/app.facade';
 import { DeviceType } from 'ish-core/models/viewtype/viewtype.types';
+import { ActivatedRoute } from '@angular/router';
 
 /**
  * The App Component provides the application frame for the single page application.
@@ -24,13 +25,22 @@ export class AppComponent implements OnInit {
   wrapperClasses$: Observable<string[]>;
   deviceType$: Observable<DeviceType>;
 
-  constructor(private appFacade: AppFacade, @Inject(PLATFORM_ID) platformId: string) {
+  ampliencePreview = false;
+  constructor(private appFacade: AppFacade, @Inject(PLATFORM_ID) platformId: string, private route: ActivatedRoute) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
 
   ngOnInit() {
     this.deviceType$ = this.appFacade.deviceType$;
     this.wrapperClasses$ = this.appFacade.appWrapperClasses$;
+    this.route.queryParamMap.subscribe(params => {
+      let amplienceid = params.get('amplienceid');
+      if (amplienceid) {
+        this.ampliencePreview = true;
+      }
+
+      console.log('amplienceid', this.ampliencePreview);
+    });
   }
 
   dismiss() {

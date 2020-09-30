@@ -28,4 +28,17 @@ export class IncludesEffects {
       )
     )
   );
+  @Effect()
+  loadAmplienceContentInclude$ = this.actions$.pipe(
+    ofType<includesActions.LoadAmplienceContentInclude>(
+      includesActions.IncludesActionTypes.LoadAmplienceContentInclude
+    ),
+    mapToPayloadProperty('data'),
+    mergeMap(data =>
+      this.cmsService.getAmplienceContentInclude(data).pipe(
+        map(contentInclude => new includesActions.LoadAmplienceContentIncludeSuccess(contentInclude)),
+        mapErrorToAction(includesActions.LoadAmplienceContentIncludeFail)
+      )
+    )
+  );
 }

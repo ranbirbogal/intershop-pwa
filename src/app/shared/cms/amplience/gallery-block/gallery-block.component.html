@@ -1,0 +1,11 @@
+<h1>{{ item.title }}</h1>
+<div [ngClass]="'class'">
+  <div class="row">
+    <div [ngClass]="'col-sm-4'" *ngFor="let item1 of item.items">
+      <img
+        src="//{{ item1.image.defaultHost }}/i/{{ item1.image.endpoint }}/{{ item1.image.name }}"
+        title="{{ item1.title }}"
+      />
+    </div>
+  </div>
+</div>

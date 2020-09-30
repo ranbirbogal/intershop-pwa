@@ -1,0 +1,23 @@
+<h1>Carousel</h1>
+<ngb-carousel
+  [showNavigationArrows]="true"
+  [showNavigationIndicators]="true"
+  interval="5000"
+  [keyboard]="true"
+  [pauseOnHover]="true"
+  [wrap]="true"
+  [activeId]="'slideTwo'"
+>
+  <ng-template ngbSlide *ngFor="let item of item.slides">
+    <div class="picsum-img-wrapper">
+      <img
+        src="//{{ item.image.defaultHost }}/i/{{ item.image.endpoint }}/{{ item.image.name }}"
+        title="{{ item?.imageAltText }}"
+      />
+    </div>
+    <div class="carousel-caption">
+      <h3>{{ item?.imageAltText }}</h3>
+      <p>{{ item?.seoText }}</p>
+    </div>
+  </ng-template>
+</ngb-carousel>

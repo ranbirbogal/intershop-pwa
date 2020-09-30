@@ -1,1 +1,13 @@
-<ish-content-include includeId="pwa.include.homepage.pagelet2-Include"></ish-content-include>
+<!-- <ish-content-include includeId="pwa.include.homepage.pagelet2-Include"></ish-content-include> -->
+<ish-content-include
+  *ngIf="ampliencePreview"
+  [includeId]="amplienceContentId"
+  [ampliencePreview]="ampliencePreview"
+  [amplienceSlot]="amplienceSlot"
+></ish-content-include>
+<ish-content-include
+  *ngIf="!ampliencePreview"
+  includeId="ish-slot-homepage3"
+  [ampliencePreview]="ampliencePreview"
+  [amplienceSlot]="amplienceSlot"
+></ish-content-include>

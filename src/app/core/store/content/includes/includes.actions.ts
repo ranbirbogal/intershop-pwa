@@ -8,6 +8,9 @@ export enum IncludesActionTypes {
   LoadContentInclude = '[Content Include] Load Content Include',
   LoadContentIncludeFail = '[Content Include API] Load Content Include Fail',
   LoadContentIncludeSuccess = '[Content Include API] Load Content Include Success',
+  LoadAmplienceContentInclude = '[Content Include] Load Amplience Content Include',
+  LoadAmplienceContentIncludeFail = '[Content Include API] Load Amplience Content Include Fail',
+  LoadAmplienceContentIncludeSuccess = '[Content Include API] Load Amplience Content Include Success',
 }
 
 export class LoadContentInclude implements Action {
@@ -25,4 +28,25 @@ export class LoadContentIncludeSuccess implements Action {
   constructor(public payload: { include: ContentPageletEntryPoint; pagelets: ContentPagelet[] }) {}
 }
 
-export type IncludesAction = LoadContentInclude | LoadContentIncludeFail | LoadContentIncludeSuccess;
+export class LoadAmplienceContentInclude implements Action {
+  readonly type = IncludesActionTypes.LoadAmplienceContentInclude;
+  constructor(public payload: { data: string }) {}
+}
+
+export class LoadAmplienceContentIncludeFail implements Action {
+  readonly type = IncludesActionTypes.LoadAmplienceContentIncludeFail;
+  constructor(public payload: { error: HttpError }) {}
+}
+
+export class LoadAmplienceContentIncludeSuccess implements Action {
+  readonly type = IncludesActionTypes.LoadAmplienceContentIncludeSuccess;
+  constructor(public payload: { include: ContentPageletEntryPoint; pagelets: ContentPagelet[] }) {}
+}
+
+export type IncludesAction =
+  | LoadContentInclude
+  | LoadContentIncludeFail
+  | LoadContentIncludeSuccess
+  | LoadAmplienceContentInclude
+  | LoadAmplienceContentIncludeFail
+  | LoadAmplienceContentIncludeSuccess;

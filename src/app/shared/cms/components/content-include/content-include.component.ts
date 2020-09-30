@@ -7,8 +7,7 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { Observable, ReplaySubject, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
 
 import { CMSFacade } from 'ish-core/facades/cms.facade';
 import { ContentPageletEntryPointView } from 'ish-core/models/content-view/content-view.model';
@@ -32,31 +31,53 @@ export class ContentIncludeComponent extends SfeMetadataWrapper implements OnIni
    * The ID of the Include whoes content is to be rendered.
    */
   @Input() includeId: string;
+  @Input() ampliencePreview: boolean;
+  @Input() amplienceSlot: boolean;
 
   contentInclude$: Observable<ContentPageletEntryPointView>;
 
   private destroy$ = new Subject();
-  private includeIdChange = new ReplaySubject<string>(1);
-
+  // private includeIdChange = new ReplaySubject<string>(1);
+  amplienceContent: Array<any>;
   constructor(private cmsFacade: CMSFacade, private cd: ChangeDetectorRef) {
     super();
   }
 
   ngOnInit() {
-    this.contentInclude$ = this.cmsFacade.contentInclude$(this.includeIdChange);
+    if (this.ampliencePreview) {
+      this.cmsFacade.amplienceContentById$(this.includeId).subscribe(d => {
+        if (this.amplienceSlot) {
+          console.log('data1', d.content.components);
+          this.amplienceContent = d.content.components;
+        } else {
+          console.log('data2', d.content);
+          this.amplienceContent = d.content;
+        }
 
-    this.cmsFacade
-      .contentIncludeSfeMetadata$(this.includeId)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(metadata => {
-        this.setSfeMetadata(metadata);
-        this.cd.markForCheck();
+        this.cd.detectChanges();
       });
+    } else {
+      this.cmsFacade.amplienceContentInclude$(this.includeId).subscribe(d => {
+        console.log('data', d.content.components);
+        this.amplienceContent = d.content.components;
+        this.cd.detectChanges();
+      });
+    }
+
+    // this.contentInclude$ = this.cmsFacade.contentInclude$(this.includeIdChange);
+
+    // this.cmsFacade
+    //   .contentIncludeSfeMetadata$(this.includeId)
+    //   .pipe(takeUntil(this.destroy$))
+    //   .subscribe(metadata => {
+    //     this.setSfeMetadata(metadata);
+    //     this.cd.markForCheck();
+    //   });
   }
 
   // TODO: replace with @ObservableInput
   ngOnChanges() {
-    this.includeIdChange.next(this.includeId);
+    // this.includeIdChange.next(this.includeId);
   }
 
   ngOnDestroy() {

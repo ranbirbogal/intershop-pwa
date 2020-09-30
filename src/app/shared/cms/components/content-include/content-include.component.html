@@ -1,3 +1,35 @@
-<ng-container *ngIf="contentInclude$ | async as contentInclude">
+<!-- <ng-container *ngIf="contentInclude$ | async as contentInclude">
   <ish-content-pagelet *ngFor="let pagelet of contentInclude.pageletIDs" [pageletId]="pagelet"></ish-content-pagelet>
-</ng-container>
+</ng-container> -->
+<div>
+  <ng-container *ngIf="ampliencePreview; else noPreview">
+    <ng-container *ngIf="amplienceSlot; else noSlot">
+      <div *ngFor="let item of amplienceContent; let i = index">
+        <div [ngSwitch]="item?.component">
+          <ish-slider-block [item]="item" *ngSwitchCase="'SliderBlock'"></ish-slider-block>
+          <ish-hero-banner [item]="item" *ngSwitchCase="'HeroBannerBlock'"></ish-hero-banner>
+          <ish-editorial-block [item]="item" *ngSwitchCase="'EditorialBlock'"></ish-editorial-block>
+          <ish-gallery-block [item]="item" *ngSwitchCase="'GalleryBlock'"></ish-gallery-block>
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #noSlot>
+      <div [ngSwitch]="amplienceContent?.component">
+        <ish-slider-block [item]="amplienceContent" *ngSwitchCase="'SliderBlock'"></ish-slider-block>
+        <ish-hero-banner [item]="amplienceContent" *ngSwitchCase="'HeroBannerBlock'"></ish-hero-banner>
+        <ish-editorial-block [item]="amplienceContent" *ngSwitchCase="'EditorialBlock'"></ish-editorial-block>
+        <ish-gallery-block [item]="amplienceContent" *ngSwitchCase="'GalleryBlock'"></ish-gallery-block>
+      </div>
+    </ng-template>
+  </ng-container>
+  <ng-template #noPreview>
+    <div *ngFor="let item of amplienceContent; let i = index">
+      <div [ngSwitch]="item?.component">
+        <ish-slider-block [item]="item" *ngSwitchCase="'SliderBlock'"></ish-slider-block>
+        <ish-hero-banner [item]="item" *ngSwitchCase="'HeroBannerBlock'"></ish-hero-banner>
+        <ish-editorial-block [item]="item" *ngSwitchCase="'EditorialBlock'"></ish-editorial-block>
+        <ish-gallery-block [item]="item" *ngSwitchCase="'GalleryBlock'"></ish-gallery-block>
+      </div>
+    </div>
+  </ng-template>
+</div>

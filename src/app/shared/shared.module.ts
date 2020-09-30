@@ -23,6 +23,10 @@ import { ShellModule } from 'ish-shell/shell.module';
 import { QuotingExportsModule } from '../extensions/quoting/exports/quoting-exports.module';
 
 import { AddressFormsSharedModule } from './address-forms/address-forms.module';
+import { EditorialBlockComponent } from './cms/amplience/editorial-block/editorial-block.component';
+import { GalleryBlockComponent } from './cms/amplience/gallery-block/gallery-block.component';
+import { HeroBannerComponent } from './cms/amplience/hero-banner/hero-banner.component';
+import { SliderBlockComponent } from './cms/amplience/slider-block/slider-block.component';
 import { CMSModule } from './cms/cms.module';
 import { CMSCarouselComponent } from './cms/components/cms-carousel/cms-carousel.component';
 import { CMSContainerComponent } from './cms/components/cms-container/cms-container.component';
@@ -144,6 +148,7 @@ const declaredComponents = [
   CMSTextComponent,
   CMSVideoComponent,
   ContentSlotComponent,
+  EditorialBlockComponent,
   FilterCheckboxComponent,
   FilterCollapsableComponent,
   FilterDropdownComponent,
@@ -152,6 +157,8 @@ const declaredComponents = [
   FilterNavigationSidebarComponent,
   FilterSwatchImagesComponent,
   FilterTextComponent,
+  GalleryBlockComponent,
+  HeroBannerComponent,
   LineItemDescriptionComponent,
   LineItemEditComponent,
   LineItemEditDialogComponent,
@@ -164,6 +171,7 @@ const declaredComponents = [
   ProductRatingStarComponent,
   ProductRowComponent,
   ProductTileComponent,
+  SliderBlockComponent,
 ];
 
 const exportedComponents = [
@@ -229,7 +237,11 @@ const exportedComponents = [
     CMSStaticPageComponent,
     CMSTextComponent,
     CMSVideoComponent,
+    EditorialBlockComponent,
+    GalleryBlockComponent,
+    HeroBannerComponent,
     LoginModalComponent,
+    SliderBlockComponent,
   ],
 })
 export class SharedModule {}

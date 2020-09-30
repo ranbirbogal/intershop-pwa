@@ -3,6 +3,7 @@ import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { filter, map, switchMap, switchMapTo, tap } from 'rxjs/operators';
 
+import { CMSService } from 'ish-core/services/cms/cms.service';
 import { LoadContentInclude, getContentInclude } from 'ish-core/store/content/includes';
 import { getContentPagelet } from 'ish-core/store/content/pagelets';
 import { getContentPageLoading, getSelectedContentPage } from 'ish-core/store/content/pages';
@@ -16,7 +17,7 @@ export class CMSFacade {
   contentPage$ = this.store.pipe(select(getSelectedContentPage));
   contentPageLoading$ = this.store.pipe(select(getContentPageLoading));
 
-  constructor(private store: Store<{}>, private sfeAdapter: SfeAdapterService) {}
+  constructor(private store: Store<{}>, private sfeAdapter: SfeAdapterService, private cmsService: CMSService) {}
 
   contentInclude$(includeId$: Observable<string>) {
     return this.store.pipe(select(getPGID)).pipe(
@@ -37,5 +38,11 @@ export class CMSFacade {
 
   pagelet$(id: string) {
     return this.store.pipe(select(getContentPagelet(), id));
+  }
+  amplienceContentInclude$(key) {
+    return this.cmsService.getAmplienceContentInclude(key);
+  }
+  amplienceContentById$(id) {
+    return this.cmsService.getAmplienceContentById(id);
   }
 }

@@ -30,7 +30,20 @@ export class CMSService {
       map(({ pageletEntryPoint, pagelets }) => ({ include: pageletEntryPoint, pagelets }))
     );
   }
+  getAmplienceContentInclude(key: any): Observable<any> {
+    console.log(key);
 
+    return this.apiService.get<any>(
+      `https://salmonnl.cdn.content.amplience.net/content/key/${key}?depth=all&format=inlined`
+    );
+  }
+  getAmplienceContentById(id: any): Observable<any> {
+    console.log(id);
+
+    return this.apiService.get<any>(
+      `https://salmonnl.cdn.content.amplience.net/content/id/${id}?depth=all&format=inlined`
+    );
+  }
   /**
    * Get the content for the given Content Page ID.
    * @param includeId The page ID.
