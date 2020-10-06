@@ -38,7 +38,8 @@ export class ContentIncludeComponent extends SfeMetadataWrapper implements OnIni
 
   private destroy$ = new Subject();
   // private includeIdChange = new ReplaySubject<string>(1);
-  amplienceContent: Array<any>;
+  // tslint:disable-next-line:no-any
+  amplienceContent: any;
   constructor(private cmsFacade: CMSFacade, private cd: ChangeDetectorRef) {
     super();
   }
