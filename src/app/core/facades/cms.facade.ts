@@ -42,7 +42,7 @@ export class CMSFacade {
   amplienceContentInclude$(key) {
     return this.cmsService.getAmplienceContentInclude(key);
   }
-  amplienceContentById$(id) {
-    return this.cmsService.getAmplienceContentById(id);
+  amplienceContentById$(id, vse) {
+    return this.cmsService.getAmplienceContentById(id, vse);
   }
 }

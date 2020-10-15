@@ -33,6 +33,7 @@ export class ContentIncludeComponent extends SfeMetadataWrapper implements OnIni
   @Input() includeId: string;
   @Input() ampliencePreview: boolean;
   @Input() amplienceSlot: boolean;
+  @Input() amplienceVse?: string;
 
   contentInclude$: Observable<ContentPageletEntryPointView>;
 
@@ -45,8 +46,12 @@ export class ContentIncludeComponent extends SfeMetadataWrapper implements OnIni
   }
 
   ngOnInit() {
+    if (!this.amplienceVse) {
+      this.amplienceVse = 'salmonnl.cdn.content.amplience.net';
+    }
+
     if (this.ampliencePreview) {
-      this.cmsFacade.amplienceContentById$(this.includeId).subscribe(d => {
+      this.cmsFacade.amplienceContentById$(this.includeId, this.amplienceVse).subscribe(d => {
         if (this.amplienceSlot) {
           console.log('data1', d.content.components);
           this.amplienceContent = d.content.components;

@@ -37,12 +37,10 @@ export class CMSService {
       `https://salmonnl.cdn.content.amplience.net/content/key/${key}?depth=all&format=inlined`
     );
   }
-  getAmplienceContentById(id: any): Observable<any> {
+  getAmplienceContentById(id: any, vse: any): Observable<any> {
     console.log(id);
-
-    return this.apiService.get<any>(
-      `https://salmonnl.cdn.content.amplience.net/content/id/${id}?depth=all&format=inlined`
-    );
+    console.log(vse);
+    return this.apiService.get<any>(`https://${vse}/content/id/${id}?depth=all&format=inlined`);
   }
   /**
    * Get the content for the given Content Page ID.

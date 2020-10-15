@@ -9,12 +9,14 @@ import { ActivatedRoute } from '@angular/router';
 export class HomePageComponent implements OnInit {
   // amplienceContent: Array<any>;
   amplienceContentId: string;
+  amplienceVse: string;
   ampliencePreview = false;
   amplienceSlot = false;
   constructor(private route: ActivatedRoute) {}
   ngOnInit() {
     this.route.queryParamMap.subscribe(params => {
       this.amplienceContentId = params.get('amplienceid');
+      this.amplienceVse = params.get('vse');
       if (this.amplienceContentId) {
         this.ampliencePreview = true;
       }
