@@ -41,7 +41,7 @@ const logging = !!process.env.LOGGING;
 // Express server
 const app = express();
 
-const PORT = process.env.PORT || 4200;
+const PORT = process.env.PORT || 80;
 const DIST_FOLDER = join(process.cwd(), 'dist');
 
 const ICM_BASE_URL = process.env.ICM_BASE_URL || environment.icmBaseURL;
